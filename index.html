@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo</title>
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+    <link href="//unpkg.com/layui@2.9.20/dist/css/layui.css" rel="stylesheet">
+    <style>
+
+        .carousel-img {
+            width: 100%;
+            
+            height: auto;
+            
+            object-fit: cover;
+            
+        }
+        .container {
+            display: grid;
+            place-items: center; 
+            height: 100vh;       
+        }
+        .box {
+            width: 200px;
+            height: 100px;
+            background-color: lightgreen;
+        }
+        
+        .layui-carousel {
+            width: 100%;
+            
+            height: 500px;
+            
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        
+        
+        .popup {
+            position: absolute;
+            
+            display: none;
+            
+            background-color: white;
+            
+            border: 1px solid #ccc;
+            
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            
+            padding: 10px;
+            max-width: 300px;
+            width: auto;
+            z-index: 9999;
+        }
+
+        
+        .popup h3 {
+            margin: 0;
+            font-size: 16px;
+            padding-bottom: 10px;
+        }
+
+        
+        .popup ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .popup ul li {
+            padding: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+    <div id='layui_c'class="layui-panel" style="width: 80%;">
+        <br>
+        <h1>小组赛分组情况</h1>
+        <br>
+        <table class="layui-table" lay-even >
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>A组</th>
+                    <th>B组</th>
+                    <th>C组</th>
+                    <th>D组</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="group-A">
+                    <td>Moist Esports</td>
+                    <td>Fnatic</td>
+                    <td>Gaimin Gladiators</td>
+                    <td>Alliance</td>
+                </tr>
+                <tr id="group-B">
+                    <td>TSM</td>
+                    <td>Guild Esports</td>
+                    <td>Team Falcons</td>
+                    <td>Crazy Raccoon</td>
+                </tr>
+                <tr id="group-C">
+                    <td>Cloud9</td>
+                    <td>Primis Komanda</td>
+                    <td>Luminosity Gaming</td>
+                    <td>Loan Sharks</td>
+                </tr>
+                <tr id="group-D">
+                    <td>100 Thieves</td>
+                    <td>VK Gaming</td>
+                    <td>Aurora Gaming</td>
+                    <td>Team Liquid</td>
+                </tr>
+                <tr id="group-E">
+                    <td>NRG</td>
+                    <td>Complexity Gaming</td>
+                    <td>Team Burger</td>
+                    <td>DreamFire</td>
+                </tr>
+                <tr id="group-F">
+                    <td>EXO Clan</td>
+                    <td>Virtus.pro</td>
+                    <td>Noctem Esports</td>
+                    <td>FURIA Esports</td>
+                </tr>
+                <tr id="group-G">
+                    <td>Ninjas in Pyjamas</td>
+                    <td>Mkers</td>
+                    <td>Orgless and Hungry</td>
+                    <td>GoNext Esports</td>
+                </tr>
+                <tr id="group-H">
+                    <td>shadow3690</td>
+                    <td>Dragons Esports</td>
+                    <td>GHS Professional</td>
+                    <td>ENTER FORCE.36</td>
+                </tr>
+                <tr id="group-I">
+                    <td>FaZe Clan</td>
+                    <td>XNY</td>
+                    <td>REIGNITE</td>
+                    <td>Stallions</td>
+                </tr>
+                <tr id="group-J">
+                    <td>Oblivion</td>
+                    <td>Meteor</td>
+                    <td>Ethernal</td>
+                    <td>HAVOC</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h1>地图池</h1>
+        <br>
+        <div class="layui-carousel" id="ID-carousel-demo-image">
+            <div carousel-item>
+                <div>
+                    <div><img src="/img/map/apex-media-maps-e-district-xl.jpg.adapt.1456w.jpg" alt="Image 1"
+                            class="carousel-img"></div>
+                </div>
+                <div>
+                    <div><img src="/img/map/apex-media-maps-stormpoint-xl-l-m.jpg.adapt.1456w.jpg" alt="Image 1"
+                            class="carousel-img"></div>
+
+                </div>
+
+                <div>
+                    <img src="/img/map/apex-media-maps-worlds-edge-xl-l-m.jpg.adapt.1456w.jpg" alt="Image 1"
+                        class="carousel-img">
+
+                </div>
+            </div>
+        </div>
+        <h1>POI Draft(队伍选择跳点)</h1>
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="group">组1</th>
+                    <th class="group">组2</th>
+                    <th class="group">选秀时间（北京时间/24小时制）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="group" data-group="A">A组</td>
+                    <td class="group" data-group="B">B组</td>
+                    <td>2025-01-11 08:00</td>
+                </tr>
+                <tr>
+                    <td class="group" data-group="C">C组</td>
+                    <td class="group" data-group="D">D组</td>
+                    <td>2025-01-11 08:30</td>
+                </tr>
+                <tr>
+                    <td class="group" data-group="B">B组</td>
+                    <td class="group" data-group="D">D组</td>
+                    <td>2025-01-11 09:00</td>
+                </tr>
+                <tr>
+                    <td class="group" data-group="A">A组</td>
+                    <td class="group" data-group="C">C组</td>
+                    <td>2025-01-11 09:30</td>
+                </tr>
+                <tr>
+                    <td class="group" data-group="B">B组</td>
+                    <td class="group" data-group="C">C组</td>
+                    <td>2025-01-11 10:00</td>
+                </tr>
+                <tr>
+                    <td class="group" data-group="A">A组</td>
+                    <td class="group" data-group="D">D组</td>
+                    <td>2025-01-11 10:30</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- 弹出窗口显示组的队伍 -->
+        <div id="popup" class="popup">
+            <h3>队伍列表</h3>
+            <ul id="team-list">
+                <!-- 动态加载队伍信息 -->
+            </ul>
+        </div>
+
+        <h1>小组赛</h1>
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">小组赛Day1 (1月29日 ， 星期三)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">10：15</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>A组 vs B组</td>
+                    <td>比赛场数</td>
+                    <td>6场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">电气区，风暴点，世界尽头</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">小组赛Day1 (1月29日 ， 星期三)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">14：30</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>C组 vs D组</td>
+                    <td>比赛场数</td>
+                    <td>6场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">电气区，风暴点，世界尽头</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">小组赛Day1 (1月29日 ， 星期三)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">18：45</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>B组 vs D组</td>
+                    <td>比赛场数</td>
+                    <td>6场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">风暴点，世界尽头，电气区</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">小组赛Day2 (1月30日 ， 星期四)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">10：30</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>A组 vs C组</td>
+                    <td>比赛场数</td>
+                    <td>6场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">风暴点，世界尽头，电气区</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">小组赛Day2 (1月30日 ， 星期四)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">14：30</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>B组 vs C组</td>
+                    <td>比赛场数</td>
+                    <td>6场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">世界尽头，电气区，风暴点</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">小组赛Day2 (1月30日 ， 星期四)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">18：45</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>A组 vs D组</td>
+                    <td>比赛场数</td>
+                    <td>6场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">世界尽头，电气区，风暴点</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h1>淘汰赛</h1>
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">淘汰赛Day1 (1月31日 ， 星期五)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">13：15</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>败者组第一轮</td>
+                    <td>比赛场数</td>
+                    <td>8场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">电气区(3)，世界尽头(2)，风暴点(3)</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">淘汰赛Day1 (1月31日 ， 星期五)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">12：15</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>胜者组</td>
+                    <td>比赛场数</td>
+                    <td>8场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">风暴点(3)，世界尽头(2)，电气区(3)</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">淘汰赛Day2 (2月01日 ， 星期六)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">18：00</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>败者组第二轮</td>
+                    <td>比赛场数</td>
+                    <td>8场</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">世界尽头(3)，电气区(2)，风暴点(3)</td>
+                </tr>
+            </tbody>
+        </table>
+        <h1>最终总决赛</h1>
+        <table class="layui-table" lay-even>
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="250">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="4" style="text-align: center;">总决赛 (2月02日 ， 星期日)</td>
+                </tr>
+                <tr>
+                    <td colspan="2">比赛开始时间</td>
+                    <td colspan="2">13：00</td>
+                </tr>
+                <tr>
+                    <td>组别</td>
+                    <td>总决赛</td>
+                    <td>赛制</td>
+                    <td>50分赛点制</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">地图池</td>
+                    <td  colspan="2">电气区，风暴点，世界尽头（采用蛇形地图轮换，即123，321，123以此类推）</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</body>
+<script src="//unpkg.com/layui@2.9.20/dist/layui.js"></script>
+
+<script>
+    layui.use(function () {
+        var carousel = layui.carousel;
+        
+        carousel.render({
+            elem: '#ID-carousel-demo-image',
+            width: '100%', 
+            height: '430px', 
+            arrow: 'hover', 
+            interval: 2000 
+        });
+    });
+    
+    
+    const teams = {
+        A: ['Moist Esports', 'TSM', 'Cloud9', '100 Thieves', 'NRG', 'EXO Clan', 'Ninjas in Pyjamas', 'shadow3690', 'FaZe Clan', 'Oblivion'],
+        B: ['Fnatic', 'Guild Esports', 'Primis Komanda', 'VK Gaming', 'Complexity Gaming', 'Virtus.pro', 'Mkers', 'Dragons Esports', 'XNY', 'Meteor'],
+        C: ['Gaimin Gladiators', 'Team Falcons', 'Luminosity Gaming', 'Aurora Gaming', 'Team Burger', 'Noctem Esports', 'Orgless and Hungry', 'GHS Professional', 'REIGNITE', 'Ethernal'],
+        D: ['Alliance', 'Crazy Raccoon', 'Loan Sharks', 'Team Liquid', 'DreamFire', 'FURIA Esports', 'GoNext Esports', 'ENTER FORCE.36', 'Stallions', 'HAVOC']
+    };
+
+    
+    const groupCells = document.querySelectorAll('.group');
+    const popup = document.getElementById('popup');
+    const teamList = document.getElementById('team-list');
+
+    
+    groupCells.forEach(cell => {
+        cell.addEventListener('mouseover', function () {
+            const group = this.getAttribute('data-group'); 
+            const groupTeams = teams[group]; 
+
+            
+            teamList.innerHTML = '';
+
+            
+            groupTeams.forEach(team => {
+                const li = document.createElement('li');
+                li.textContent = team;
+                teamList.appendChild(li);
+            });
+
+            
+            const rect = this.getBoundingClientRect();
+            popup.style.left = `${rect.left + window.scrollX}px`; 
+            popup.style.top = `${rect.top + rect.height + window.scrollY}px`; 
+
+            
+            popup.style.display = 'block';
+        });
+
+        
+        cell.addEventListener('mouseout', function () {
+            popup.style.display = 'none';
+        });
+    });
+
+
+</script>
+
+</html>
